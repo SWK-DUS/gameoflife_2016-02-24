@@ -1,5 +1,6 @@
 package org.softwerkskammer.dus.kata.gameoflife;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -278,17 +279,25 @@ public class GameOfLifeTest {
 
     }
 
+    @Test
+    public void printFullBoard() throws Exception {
+
+        boolean[][] immediatelyFullBoard = {
+                new boolean[]{true, true, true},
+                new boolean[]{true, true, true},
+                new boolean[]{true, true, true}};
+        assertThat(printBoard(immediatelyFullBoard), equalTo("XXX\nXXX\nXXX"));
+
+    }
+
     public String printBoard(boolean[][] board) {
-        System.out.println(Arrays.toString(board));
         return Stream.of(board).map(this::printRow).collect(Collectors.joining("\n"));
 
     }
 
     private String printRow(boolean[] row) {
-        System.out.println(Arrays.toString(row));
-        List<boolean[]> asList = Arrays.asList(row);
-        int a = 0;
-        return Arrays.asList(row).stream().map(cell -> ".").collect(Collectors.joining());
+        Boolean[] objectRow = ArrayUtils.toObject(row);
+        return Stream.of(objectRow).map(cell -> cell ? "X" : ".").collect(Collectors.joining());
 
 
     }
